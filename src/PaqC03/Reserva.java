@@ -128,13 +128,13 @@ public class Reserva {
         }
     }
 
-    public int[] reservarHab(Reserva rHab, String opcion) {
+    public int[] reservarHab(Reserva rHab, String opcion ) { //num de habitaciones
         int[] habitacion = encontrarHabLibre(opcion);
         hotel[habitacion[0]][habitacion[1]] = rHab;
         return habitacion;
     }
 
-    public int[] encontrarHabLibre(String opc) {
+        private int[] encontrarHabLibre(String opc) {
         int fila = 0;
         int columna = 0;
         switch (opc) {
