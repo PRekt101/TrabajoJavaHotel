@@ -27,11 +27,15 @@ public class MainFrame2 extends JFrame{
     private JTextField txtSalida;
     private JTextField txtAlimentacion;
     private JTextArea txtMapa;
-    private JTextField txtHabitaciones;
+    private JTextField txtBalcon;
     private JButton btnAnular;
+    private JTextField txtEstandar;
+    private JTextField txtSuite;
 
     int precioTotal = 0;
-    String opcion="";
+    String opcion1="";
+    String opcion2="";
+    String opcion3="";
     static Hotel hotel = new Hotel();
 
     public MainFrame2() {
@@ -48,9 +52,7 @@ public class MainFrame2 extends JFrame{
 
         cbBOpciones.setSelectedItem(null);
 
-        try{
-        ObjectInputStream leyendoFichero = new ObjectInputStream(
-                new FileInputStream("datosHotel.dat"));
+        try(ObjectInputStream leyendoFichero = new ObjectInputStream(new FileInputStream("datosHotel.dat"))){
         hotel = (Hotel) leyendoFichero.readObject();
         leyendoFichero.close();
         } catch (IOException | ClassNotFoundException ex) {
@@ -96,7 +98,9 @@ public class MainFrame2 extends JFrame{
                 }
                 if (!Objects.equals(txtDNI.getText(), "") && !Objects.equals(txtNombre.getText(), "") && !Objects.equals(txtApellidos.getText(), "") && !Objects.equals(txtTelefono.getText(), "") && !Objects.equals(txtTarjeta.getText(), "") && !Objects.equals(txtEntrada.getText(), "") && !Objects.equals(txtSalida.getText(), "") && !Objects.equals(txtAlimentacion.getText(), "") && cbEstandar.isSelected() || cbBalcon.isSelected() || cbSuite.isSelected()) {
                     Cliente c1 = new Cliente(txtNombre.getText(),txtApellidos.getText(),Integer.parseInt(txtDNI.getText()),Integer.parseInt(txtTelefono.getText()),Integer.parseInt(txtTarjeta.getText()),txtEntrada.getText(),txtSalida.getText(),txtAlimentacion.getText());
-                    hotel.reservarHab(c1, opcion, Integer.parseInt(txtHabitaciones.getText()));
+                    hotel.reservarHab(c1, opcion1, Integer.parseInt(txtEstandar.getText()));
+                    hotel.reservarHab(c1, opcion2, Integer.parseInt(txtBalcon.getText()));
+                    hotel.reservarHab(c1, opcion3, Integer.parseInt(txtSuite.getText()));
                     txtMapa.setText(hotel.toString());
                     try {
                     ObjectOutputStream escribiendoFichero = null;
@@ -107,7 +111,6 @@ public class MainFrame2 extends JFrame{
                     } catch (IOException ex) {
                         ex.printStackTrace();
                     }
-                    //JOptionPane.showMessageDialog(null, "Se ha reservado la hab "+(h[1])+" de la planta "+(h[0]), "", JOptionPane.PLAIN_MESSAGE);
                 }
             }
         });
@@ -115,11 +118,11 @@ public class MainFrame2 extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (cbEstandar.isSelected()){
-                    precioTotal = (precioTotal + 20)* Integer.parseInt(txtHabitaciones.getText());
+                    precioTotal = (precioTotal + 20)* Integer.parseInt(txtEstandar.getText());
                 }else if (cbBalcon.isSelected()){
-                    precioTotal = (precioTotal + 50)* Integer.parseInt(txtHabitaciones.getText());
+                    precioTotal = (precioTotal + 50)* Integer.parseInt(txtBalcon.getText());
                 }else if (cbSuite.isSelected()){
-                    precioTotal = (precioTotal + 250)* Integer.parseInt(txtHabitaciones.getText());
+                    precioTotal = (precioTotal + 250)* Integer.parseInt(txtSuite.getText());
                 }
                 txtPrecioTotal.setText(""+precioTotal);
             }
@@ -128,12 +131,9 @@ public class MainFrame2 extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (cbEstandar.isSelected()){
-                    cbBalcon.setEnabled(false);
-                    cbSuite.setEnabled(false);
-                    opcion="Estandar";
+                    opcion1="Estandar";
                 }else{
-                    cbBalcon.setEnabled(true);
-                    cbSuite.setEnabled(true);
+                    opcion1="";
                     precioTotal = 0;
                 }
                 JOptionPane.showMessageDialog(null, "Has pulsado "+cbEstandar.getText(), "", JOptionPane.PLAIN_MESSAGE);
@@ -144,12 +144,9 @@ public class MainFrame2 extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (cbBalcon.isSelected()){
-                    cbEstandar.setEnabled(false);
-                    cbSuite.setEnabled(false);
-                    opcion="Balcon";
+                    opcion2="Balcon";
                 }else{
-                    cbEstandar.setEnabled(true);
-                    cbSuite.setEnabled(true);
+                    opcion2="";
                     precioTotal = 0;
                 }
                 JOptionPane.showMessageDialog(null, "Has pulsado "+cbBalcon.getText(), "", JOptionPane.PLAIN_MESSAGE);
@@ -159,12 +156,9 @@ public class MainFrame2 extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (cbSuite.isSelected()){
-                    cbEstandar.setEnabled(false);
-                    cbBalcon.setEnabled(false);
-                    opcion="Suite";
+                    opcion3="Suite";
                 }else{
-                    cbEstandar.setEnabled(true);
-                    cbBalcon.setEnabled(true);
+                    opcion3="";
                     precioTotal = 0;
                 }
                 JOptionPane.showMessageDialog(null, "Has pulsado "+cbSuite.getText(), "", JOptionPane.PLAIN_MESSAGE);
@@ -184,18 +178,27 @@ public class MainFrame2 extends JFrame{
         btnAnular.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (Objects.equals(txtDNI.getText(), "") || Objects.equals(txtNombre.getText(), "") || Objects.equals(txtApellidos.getText(), "") || Objects.equals(txtTelefono.getText(), "") || Objects.equals(txtTarjeta.getText(), "") || Objects.equals(txtEntrada.getText(), "") || Objects.equals(txtSalida.getText(), "") || Objects.equals(txtAlimentacion.getText(), "") || Objects.equals(txtHabitaciones.getText(), "")) {
+                if (Objects.equals(txtDNI.getText(), "") || Objects.equals(txtNombre.getText(), "") || Objects.equals(txtApellidos.getText(), "") || Objects.equals(txtTelefono.getText(), "") || Objects.equals(txtTarjeta.getText(), "") || Objects.equals(txtEntrada.getText(), "") || Objects.equals(txtSalida.getText(), "") || Objects.equals(txtAlimentacion.getText(), "") || Objects.equals(txtBalcon.getText(), "")) {
                     JOptionPane.showMessageDialog(null, "Faltan datos", "", JOptionPane.WARNING_MESSAGE);
                 }
                 if (!cbEstandar.isSelected() && !cbBalcon.isSelected() && !cbSuite.isSelected()) {
                     JOptionPane.showMessageDialog(null, "Tipo de Habitacion requerido", "", JOptionPane.WARNING_MESSAGE);
                 }
-                if (!Objects.equals(txtDNI.getText(), "") && !Objects.equals(txtNombre.getText(), "") && !Objects.equals(txtApellidos.getText(), "") && !Objects.equals(txtTelefono.getText(), "") && !Objects.equals(txtTarjeta.getText(), "") && !Objects.equals(txtEntrada.getText(), "") && !Objects.equals(txtSalida.getText(), "") && !Objects.equals(txtAlimentacion.getText(), "") || !Objects.equals(txtHabitaciones.getText(), "") && cbEstandar.isSelected() || cbBalcon.isSelected() || cbSuite.isSelected()) {
+                if (!Objects.equals(txtDNI.getText(), "") && !Objects.equals(txtNombre.getText(), "") && !Objects.equals(txtApellidos.getText(), "") && !Objects.equals(txtTelefono.getText(), "") && !Objects.equals(txtTarjeta.getText(), "") && !Objects.equals(txtEntrada.getText(), "") && !Objects.equals(txtSalida.getText(), "") && !Objects.equals(txtAlimentacion.getText(), "") || !Objects.equals(txtBalcon.getText(), "") && cbEstandar.isSelected() || cbBalcon.isSelected() || cbSuite.isSelected()) {
                     Cliente c2 = new Cliente(txtNombre.getText(), txtApellidos.getText(), Integer.parseInt(txtDNI.getText()), Integer.parseInt(txtTelefono.getText()), Integer.parseInt(txtTarjeta.getText()), txtEntrada.getText(), txtSalida.getText(), txtAlimentacion.getText());
-                    for (int i = 0; i < (Integer.parseInt(txtHabitaciones.getText())); i++) {
-                        hotel.anularReserva(c2, (Integer.parseInt(txtHabitaciones.getText())));
-                    }
+                    hotel.anularReserva(c2, opcion1, (Integer.parseInt(txtEstandar.getText())));
+                    hotel.anularReserva(c2, opcion2, (Integer.parseInt(txtBalcon.getText())));
+                    hotel.anularReserva(c2, opcion3, (Integer.parseInt(txtSuite.getText())));
                     txtMapa.setText(hotel.toString());
+                    try {
+                        ObjectOutputStream escribiendoFichero = null;
+                        escribiendoFichero = new ObjectOutputStream(
+                                new FileOutputStream("datosHotel.dat"));
+                        escribiendoFichero.writeObject(hotel);
+                        escribiendoFichero.close();
+                    } catch (IOException ex) {
+                        ex.printStackTrace();
+                    }
                 }
             }
         });

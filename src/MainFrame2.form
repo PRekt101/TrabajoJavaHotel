@@ -271,7 +271,7 @@
           <text value="Anular"/>
         </properties>
       </component>
-      <component id="6f561" class="javax.swing.JTextField" binding="txtHabitaciones">
+      <component id="6f561" class="javax.swing.JTextField" binding="txtBalcon">
         <constraints>
           <grid row="3" column="5" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="0" indent="0" use-parent-layout="false">
             <preferred-size width="150" height="-1"/>
@@ -287,6 +287,26 @@
         </constraints>
         <properties>
           <text value="Cantidad"/>
+        </properties>
+      </component>
+      <component id="eea6d" class="javax.swing.JTextField" binding="txtEstandar">
+        <constraints>
+          <grid row="2" column="5" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="0" indent="0" use-parent-layout="false">
+            <preferred-size width="150" height="-1"/>
+          </grid>
+        </constraints>
+        <properties>
+          <text value="0"/>
+        </properties>
+      </component>
+      <component id="a5598" class="javax.swing.JTextField" binding="txtSuite">
+        <constraints>
+          <grid row="4" column="5" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="0" indent="0" use-parent-layout="false">
+            <preferred-size width="150" height="-1"/>
+          </grid>
+        </constraints>
+        <properties>
+          <text value="0"/>
         </properties>
       </component>
     </children>
