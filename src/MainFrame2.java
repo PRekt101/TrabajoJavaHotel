@@ -31,6 +31,7 @@ public class MainFrame2 extends JFrame{
     private JButton btnAnular;
     private JTextField txtEstandar;
     private JTextField txtSuite;
+    private JButton btnBuscar;
 
     int precioTotal = 0;
     String opcion1="";
@@ -200,6 +201,27 @@ public class MainFrame2 extends JFrame{
                         ex.printStackTrace();
                     }
                 }
+            }
+        });
+        btnBuscar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Cliente c3 = new Cliente(Integer.parseInt(txtDNI.getText()));
+                Cliente c4 = new Cliente(txtNombre.getText(), txtApellidos.getText(), Integer.parseInt(txtDNI.getText()), Integer.parseInt(txtTelefono.getText()), Integer.parseInt(txtTarjeta.getText()), txtEntrada.getText(), txtSalida.getText(), txtAlimentacion.getText());
+                c4 = hotel.DevolverDni(c3);
+                if(c4 == null) {
+                    JOptionPane.showMessageDialog(null, "Cliente no Encontrado", "", JOptionPane.WARNING_MESSAGE);
+                } else {
+                    txtDNI.setText(c4.getDNI() +"");
+                    txtNombre.setText(c4.getNombre());
+                    txtApellidos.setText(c4.getApellidos());
+                    txtTelefono.setText(c4.getNumTelef() + "");
+                    txtTarjeta.setText(c4.getNumTarjet() + "");
+                    txtEntrada.setText(c4.getFechaEntrada());
+                    txtSalida.setText(c4.getFechaSalida());
+                    txtAlimentacion.setText(c4.getRegAlimenticio());
+                }
+
             }
         });
     }
